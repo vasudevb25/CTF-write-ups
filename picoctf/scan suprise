@@ -1,0 +1,120 @@
+Description
+I've gotten bored of handing out flags as text. Wouldn't it be cool if they were an image instead?
+You can download the challenge files here:
+challenge.zip
+
+solution 
+
+so its a bar code..
+decrypt the bar code kaam kattam..
+
+USE [zbar-tools]
+
+**`zbar-tools`** is a command-line toolset for scanning and decoding barcodes and QR codes from various sources, such as images, PDFs, or live video feeds from webcams. It is part of the **ZBar** barcode reader library.
+
+### **Key Tools and Commands**
+
+1. **`zbarimg`**: Scans and decodes barcodes from image files.
+   ```bash
+   zbarimg [options] imagefile
+   ```
+
+   **Examples:**
+   - Scan a barcode from an image:
+     ```bash
+     zbarimg barcode.png
+     ```
+   - Suppress non-data output:
+     ```bash
+     zbarimg -q barcode.png
+     ```
+   - Decode multiple barcodes in a single image:
+     ```bash
+     zbarimg multiple_barcodes.png
+     ```
+
+2. **`zbarcam`**: Scans barcodes in real-time using a webcam.
+   ```bash
+   zbarcam
+   ```
+   - Launches a live video feed and decodes any visible barcodes or QR codes.
+   - Useful for applications like scanning product barcodes or QR code-based tickets.
+
+3. **`zbar` (Library API)**: Provides a programming interface for barcode scanning in applications written in C, Python, etc.
+
+---
+
+### **Using `zbarimg` for Different Formats**
+- **Basic Output**:
+  ```bash
+  zbarimg qr_code.png
+  ```
+  **Output:**
+  ```
+  QR-Code:Hello, World!
+  scanned 1 barcode symbols from 1 images in 0.03 seconds
+  ```
+
+- **Output Only the Data**:
+  ```bash
+  zbarimg -q qr_code.png
+  ```
+  **Output:**
+  ```
+  Hello, World!
+  ```
+
+- **Supported Formats**:
+  ZBar automatically detects formats like QR codes, UPC, Code 128, etc.
+
+---
+
+### **Combining `zbarimg` with Other Tools**
+
+1. **Extract barcodes from PDFs using `pdftoppm` and `zbarimg`:**
+   ```bash
+   pdftoppm input.pdf output -png
+   zbarimg output*.png
+   ```
+
+2. **Using with `ffmpeg` for video barcode scanning:**
+   ```bash
+   ffmpeg -i video.mp4 -vf fps=1 out%d.png
+   zbarimg out*.png
+   ```
+
+---
+
+### **Sample Use Case**
+- **Scan and Process QR Codes:**
+  ```bash
+  zbarimg qr_code.png | awk -F: '{print $2}'
+  ```
+  Extracts only the QR code content.
+
+- **Decode Barcodes from a Directory of Images:**
+  ```bash
+  for img in *.png; do
+      zbarimg -q "$img"
+  done
+  ```
+
+---
+
+### **Practical Applications**
+- Automated ticket validation via QR codes.
+- Barcode scanning for inventory management.
+- Real-time scanning of barcodes for retail or logistics.
+- Data extraction from image files.
+
+
+
+
+
+
+
+---
+
+
+answer
+![alt text](image.png)
